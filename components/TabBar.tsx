@@ -4,6 +4,18 @@ import { Text, IconButton } from 'react-native-paper';
 import { BottomTabBarProps } from '@react-navigation/bottom-tabs';
 import { useTheme } from '../context/ThemeContext';
 
+// Function to get the localized tab label
+const getTabLabel = (routeName: string, defaultLabel: any): React.ReactNode => {
+  switch (routeName) {
+    case 'Home': return 'Ana Sayfa';
+    case 'Calendar': return 'Takvim';
+    case 'Log': return 'Kayıt';
+    case 'Stats': return 'İstatistik';
+    case 'Profile': return 'Profil';
+    default: return typeof defaultLabel === 'string' ? defaultLabel : routeName;
+  }
+};
+
 const TabBar: React.FC<BottomTabBarProps> = ({ state, descriptors, navigation }) => {
   const { theme } = useTheme();
   
@@ -77,11 +89,7 @@ const TabBar: React.FC<BottomTabBarProps> = ({ state, descriptors, navigation })
                 styles.label,
                 { color: isFocused ? theme.primary : theme.text }
               ]}>
-                {route.name === 'Home' ? 'Ana Sayfa' :
-                 route.name === 'Calendar' ? 'Takvim' :
-                 route.name === 'Log' ? 'Kayıt' :
-                 route.name === 'Stats' ? 'İstatistik' :
-                 route.name === 'Profile' ? 'Profil' : label}
+                {getTabLabel(route.name, label)}
               </Text>
             </View>
           </TouchableOpacity>

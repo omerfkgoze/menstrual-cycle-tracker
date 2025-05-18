@@ -334,10 +334,13 @@ const StatsScreen: React.FC = () => {
                 height={220}
                 chartConfig={{
                   ...chartConfig,
-                  color: (opacity = 1) => `rgba(90, 200, 250, ${opacity})`,
+                  color: (opacity = 1) => `rgba(241, 90, 90, ${opacity})`,
                 }}
                 style={styles.chart}
                 verticalLabelRotation={30}
+                yAxisLabel=""
+                xAxisLabel=""
+                yAxisSuffix=""
               />
               
               <Text style={[styles.chartNote, { color: theme.text }]}>
@@ -364,6 +367,9 @@ const StatsScreen: React.FC = () => {
                 }}
                 style={styles.chart}
                 verticalLabelRotation={30}
+                yAxisLabel=""
+                xAxisLabel=""
+                yAxisSuffix=""
               />
               
               <Text style={[styles.chartNote, { color: theme.text }]}>
