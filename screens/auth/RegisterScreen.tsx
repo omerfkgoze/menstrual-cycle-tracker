@@ -28,6 +28,11 @@ const RegisterScreen: React.FC = () => {
   };
   
   const handleRegister = async () => {
+    // Hata ayıklama için konsola bilgi yazdırıyoruz
+    console.log('Kayıt işlemi başlatılıyor...');
+    console.log('E-posta:', email);
+    console.log('Şifre uzunluğu:', password.length);
+    
     // Doğrulama kontrolleri
     if (!email || !password || !confirmPassword) {
       Alert.alert('Hata', 'Lütfen tüm alanları doldurun.');
@@ -55,22 +60,31 @@ const RegisterScreen: React.FC = () => {
     }
     
     setLoading(true);
+    console.log('Supabase signUp fonksiyonu çağrılıyor...');
     
     try {
-      const { error } = await signUp(email, password);
+      // Supabase'e kayıt isteği gönderiliyor
+      const { data, error } = await signUp(email, password);
+      
+      console.log('Supabase yanıtı:', { data, error });
       
       if (error) {
-        Alert.alert('Kayıt Hatası', error.message);
+        console.error('Supabase hatası:', error);
+        Alert.alert('Kayıt Hatası', error.message || 'Kayıt sırasında bir hata oluştu');
       } else {
+        console.log('Kayıt başarılı:', data);
         Alert.alert(
-          'Kayıt Başarılı',
+          'Kayıt Başarılı', 
           'Hesabınız oluşturuldu. Lütfen e-posta adresinize gönderilen doğrulama bağlantısını kontrol edin.',
           [{ text: 'Tamam', onPress: () => navigation.navigate('Login') }]
         );
       }
-    } catch (error) {
-      Alert.alert('Kayıt Hatası', 'Kayıt olurken bir hata oluştu. Lütfen tekrar deneyin.');
-      console.error('Kayıt hatası:', error);
+    } catch (error: any) {
+      console.error('Kayıt işlemi sırasında istisna:', error);
+      Alert.alert(
+        'Kayıt Hatası', 
+        `Kayıt sırasında bir hata oluştu: ${error?.message || 'Bilinmeyen hata'}`
+      );
     } finally {
       setLoading(false);
     }
@@ -87,7 +101,7 @@ const RegisterScreen: React.FC = () => {
             Hesap Oluştur
           </Text>
           <Text style={[styles.headerSubtitle, { color: theme.text }]}>
-            Sağlığınızı takip etmeye başlayın
+            Sağlığınızı takip etmek için hesap oluşturun
           </Text>
         </View>
         
@@ -97,19 +111,19 @@ const RegisterScreen: React.FC = () => {
             value={email}
             onChangeText={setEmail}
             mode="outlined"
-            keyboardType="email-address"
-            autoCapitalize="none"
             style={styles.input}
             outlineColor={theme.border}
             activeOutlineColor={theme.primary}
+            keyboardType="email-address"
+            autoCapitalize="none"
           />
           
           <TextInput
             label="Şifre"
             value={password}
             onChangeText={setPassword}
-            mode="outlined"
             secureTextEntry={!showPassword}
+            mode="outlined"
             style={styles.input}
             outlineColor={theme.border}
             activeOutlineColor={theme.primary}
@@ -125,8 +139,8 @@ const RegisterScreen: React.FC = () => {
             label="Şifreyi Onayla"
             value={confirmPassword}
             onChangeText={setConfirmPassword}
-            mode="outlined"
             secureTextEntry={!showPassword}
+            mode="outlined"
             style={styles.input}
             outlineColor={theme.border}
             activeOutlineColor={theme.primary}

@@ -8,6 +8,7 @@
 - [x] Supabase projesi oluşturma ve bağlantı kurulumu
 - [x] Temel proje yapısını oluşturma
 - [x] Gerekli bağımlılıkları yükleme (Supabase, React Navigation, vb.)
+- [x] Proje bağımlılıklarını düzeltme ve web desteği ekleme
 
 ### 2. Veritabanı Tasarımı
 
@@ -21,6 +22,8 @@
 ### 3. Temel Uygulama Özellikleri
 
 - [x] Kullanıcı kimlik doğrulama (kayıt, giriş, şifre sıfırlama)
+  - [x] Kayıt işlemi hata ayıklama ve sorun giderme (18 Mayıs 2025)
+  - [x] Supabase bağlantı sorunlarını düzeltme (18 Mayıs 2025)
 - [x] Döngü takip ekranı
 - [x] Takvim görünümü
 - [x] Semptom ve ruh hali giriş ekranı

@@ -2,10 +2,10 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import { createClient } from '@supabase/supabase-js';
 import 'react-native-url-polyfill/auto';
 
-// Supabase URL ve anonim anahtarı
-// Gerçek bir uygulamada bunlar .env dosyasından alınmalıdır
-const supabaseUrl = 'YOUR_SUPABASE_URL';
-const supabaseAnonKey = 'YOUR_SUPABASE_ANON_KEY';
+// Supabase URL ve anonim anahtarı doğrudan kullanıyoruz
+// @env modülünden içe aktarma yerine doğrudan değerleri kullanıyoruz
+const supabaseUrl = 'https://gmqfllukurfrdyztggob.supabase.co';
+const supabaseAnonKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImdtcWZsbHVrdXJmcmR5enRnZ29iIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDc1OTE5NjQsImV4cCI6MjA2MzE2Nzk2NH0.EvmqcLSt02MgUidJUIdVfu1w2H3FkzPHODHiumOE9Nc';
 
 // Supabase istemcisini oluştur
 export const supabase = createClient(supabaseUrl, supabaseAnonKey, {

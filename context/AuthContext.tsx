@@ -7,7 +7,7 @@ type AuthContextType = {
   user: User | null;
   session: Session | null;
   loading: boolean;
-  signUp: (email: string, password: string) => Promise<{ error: any }>;
+  signUp: (email: string, password: string) => Promise<{ data: any, error: any }>;
   signIn: (email: string, password: string) => Promise<{ error: any }>;
   signOut: () => Promise<void>;
   resetPassword: (email: string) => Promise<{ error: any }>;
@@ -40,9 +40,17 @@ export const AuthProvider: React.FC<{ children: React.ReactNode; session: Sessio
   // Kayıt olma fonksiyonu
   const signUp = async (email: string, password: string) => {
     setLoading(true);
-    const { error } = await supabase.auth.signUp({ email, password });
-    setLoading(false);
-    return { error };
+    console.log('AuthContext: signUp fonksiyonu çağrıldı', { email });
+    try {
+      const response = await supabase.auth.signUp({ email, password });
+      console.log('AuthContext: Supabase yanıtı', response);
+      setLoading(false);
+      return { data: response.data, error: response.error };
+    } catch (error) {
+      console.error('AuthContext: signUp hatası', error);
+      setLoading(false);
+      return { data: null, error };
+    }
   };
 
   // Giriş yapma fonksiyonu
