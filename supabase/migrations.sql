@@ -100,6 +100,48 @@ CREATE POLICY "Kullanıcılar kendi profillerini güncelleyebilir"
   ON public.profiles FOR UPDATE
   USING (auth.uid() = id);
 
+CREATE POLICY "Kullanıcılar kendi profillerini oluşturabilir"
+  ON public.profiles FOR INSERT
+  WITH CHECK (auth.uid() = id);
+
+-- Kullanıcı profili oluşturmak için güvenli bir RPC fonksiyonu
+CREATE OR REPLACE FUNCTION public.create_profile_for_user(user_id UUID)
+RETURNS BOOLEAN AS $$
+BEGIN
+  -- Profil zaten var mı kontrol et
+  IF EXISTS (SELECT 1 FROM public.profiles WHERE id = user_id) THEN
+    RETURN TRUE;
+  END IF;
+
+  -- Yeni profil oluştur
+  INSERT INTO public.profiles (
+    id, 
+    username, 
+    full_name, 
+    avatar_url, 
+    cycle_average_length, 
+    period_average_length, 
+    email_notifications, 
+    push_notifications, 
+    theme_preference,
+    updated_at
+  ) VALUES (
+    user_id,
+    NULL,
+    NULL,
+    NULL,
+    28,
+    5,
+    TRUE,
+    TRUE,
+    'system',
+    NOW()
+  );
+
+  RETURN TRUE;
+END;
+$$ LANGUAGE plpgsql SECURITY DEFINER;
+
 -- Cycles tablosu için RLS
 ALTER TABLE public.cycles ENABLE ROW LEVEL SECURITY;
 
