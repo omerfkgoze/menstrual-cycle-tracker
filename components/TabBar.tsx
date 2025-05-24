@@ -79,12 +79,14 @@ const TabBar: React.FC<BottomTabBarProps> = ({ state, descriptors, navigation })
             style={styles.tabButton}
           >
             <View style={styles.tabContent}>
-              <IconButton
-                icon={iconName}
-                size={24}
-                iconColor={isFocused ? theme.primary : theme.text}
-                style={styles.icon}
-              />
+              {/* IconButton yerine Text component içinde icon kullanıyoruz */}
+              <Text style={[styles.icon, { color: isFocused ? theme.primary : theme.text }]}>
+                {iconName === 'home' ? '🏠' :
+                 iconName === 'calendar' ? '📅' :
+                 iconName === 'plus-circle' ? '➕' :
+                 iconName === 'chart-bar' ? '📊' :
+                 iconName === 'account' ? '👤' : '⚪'}
+              </Text>
               <Text style={[
                 styles.label,
                 { color: isFocused ? theme.primary : theme.text }
@@ -120,8 +122,9 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   icon: {
-    margin: 0,
-    padding: 0,
+    fontSize: 24,
+    marginBottom: 5,
+    textAlign: 'center',
   },
   label: {
     fontSize: 12,

@@ -295,7 +295,7 @@ const LogScreen: React.FC = () => {
         <View style={styles.chipsContainer}>
           {Object.values(SymptomType).map(symptom => (
             <Chip
-              key={symptom}
+              key={`symptom-${symptom}`}
               selected={selectedSymptoms.includes(symptom)}
               onPress={() => handleSymptomToggle(symptom)}
               style={[
@@ -389,7 +389,7 @@ const LogScreen: React.FC = () => {
         <View style={styles.chipsContainer}>
           {Object.values(MoodType).map(mood => (
             <Chip
-              key={mood}
+              key={`mood-${mood}`}
               selected={selectedMoods.includes(mood)}
               onPress={() => handleMoodToggle(mood)}
               style={[

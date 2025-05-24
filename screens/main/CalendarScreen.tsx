@@ -133,22 +133,22 @@ const CalendarScreen: React.FC = () => {
     });
     
     // Semptomları işaretle
-    symptoms.forEach(symptom => {
+    symptoms.forEach((symptom, index) => {
       const dateStr = symptom.date;
       marks[dateStr] = {
         ...marks[dateStr],
         symptoms: true,
-        dots: [...(marks[dateStr]?.dots || []), { color: '#5AC8FA', key: 'symptom' }],
+        dots: [...(marks[dateStr]?.dots || []), { color: '#5AC8FA', key: `symptom-${symptom.id || index}` }],
       };
     });
     
     // Ruh hallerini işaretle
-    moods.forEach(mood => {
+    moods.forEach((mood, index) => {
       const dateStr = mood.date;
       marks[dateStr] = {
         ...marks[dateStr],
         moods: true,
-        dots: [...(marks[dateStr]?.dots || []), { color: '#4CD964', key: 'mood' }],
+        dots: [...(marks[dateStr]?.dots || []), { color: '#4CD964', key: `mood-${mood.id || index}` }],
       };
     });
     
